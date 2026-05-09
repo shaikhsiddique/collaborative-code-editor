@@ -1,11 +1,12 @@
-FROM node:20-alpine as frontend-builder
+FROM node:20-alpine AS frontend-builder
 
 COPY ./Frontend /app
 
 WORKDIR /app
-Run npm install
 
-Run npm run build
+RUN npm install
+
+RUN npm run build
 
 
 FROM node:20-alpine
@@ -14,9 +15,10 @@ COPY ./Backend /app
 
 WORKDIR /app
 
-Run npm install
+RUN npm install
 
-Copy --from=frontend-builder /app/dist /app/public
+COPY --from=frontend-builder /app/dist /app/public
 
+EXPOSE 3000
 
-CMD ["node","server.js"]
+CMD ["node", "server.js"]
