@@ -3,7 +3,6 @@ FROM node:20-alpine as frontend-builder
 COPY ./Frontend /app
 
 WORKDIR /app
-
 Run npm install
 
 Run npm run build
